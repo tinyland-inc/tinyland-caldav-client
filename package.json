@@ -29,6 +29,10 @@
     "url": "https://gitlab.com/tinyland/tinyland.dev",
     "directory": "packages/tinyland-caldav-client"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "dependencies": {
     "fast-xml-parser": "^4.0.0",
     "@tinyland-inc/tinyland-calendar": "workspace:*"
