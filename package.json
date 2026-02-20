@@ -32,8 +32,7 @@
     "url": "https://github.com/tinyland-inc/tinyland-caldav-client.git"
   },
   "dependencies": {
-    "fast-xml-parser": "^4.0.0",
-    "@tinyland-inc/tinyland-calendar": "workspace:*"
+    "fast-xml-parser": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
@@ -46,5 +45,13 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
+  },
+  "peerDependencies": {
+    "@tinyland-inc/tinyland-calendar": "^0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@tinyland-inc/tinyland-calendar": {
+      "optional": true
+    }
   }
 }
