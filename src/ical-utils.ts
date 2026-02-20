@@ -4,7 +4,7 @@
  * Generation, parsing, escaping, and date formatting for iCalendar (RFC 5545) data.
  */
 
-import type { CalendarEvent } from '@tinyland-inc/tinyland-calendar';
+import type { CalendarEvent } from '@tummycrypt/tinyland-calendar';
 
 /**
  * Escape text for iCalendar format (RFC 5545 Section 3.3.11)

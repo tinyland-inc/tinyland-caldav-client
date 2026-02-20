@@ -1,12 +1,12 @@
 /**
- * @tinyland-inc/tinyland-caldav-client
+ * @tummycrypt/tinyland-caldav-client
  *
  * Framework-agnostic CalDAV client for Xandikos calendar server
  * with sync-token support (RFC 6578).
  *
  * @example
  * ```ts
- * import { configure, CalendarClient } from '@tinyland-inc/tinyland-caldav-client';
+ * import { configure, CalendarClient } from '@tummycrypt/tinyland-caldav-client';
  *
  * configure({ baseUrl: 'http://localhost:8081' });
  *

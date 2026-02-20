@@ -1,5 +1,5 @@
 /**
- * Comprehensive tests for @tinyland-inc/tinyland-caldav-client
+ * Comprehensive tests for @tummycrypt/tinyland-caldav-client
  *
  * Tests all exported functionality:
  * - Config DI

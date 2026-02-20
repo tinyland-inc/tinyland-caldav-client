@@ -8,7 +8,7 @@
  */
 
 import { XMLParser } from 'fast-xml-parser';
-import type { CalendarEvent, Change } from '@tinyland-inc/tinyland-calendar';
+import type { CalendarEvent, Change } from '@tummycrypt/tinyland-calendar';
 import type { CalDAVSyncResultInternal } from './calendar-client.js';
 import { parseICalData } from './ical-utils.js';
 

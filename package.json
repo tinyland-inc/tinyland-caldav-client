@@ -1,5 +1,5 @@
 {
-  "name": "@tinyland-inc/tinyland-caldav-client",
+  "name": "@tummycrypt/tinyland-caldav-client",
   "version": "0.1.0",
   "description": "CalDAV client for Xandikos calendar server with sync-token support",
   "type": "module",
@@ -12,7 +12,10 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "LICENSE"],
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -30,12 +33,12 @@
     "directory": "packages/tinyland-caldav-client"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "fast-xml-parser": "^4.0.0",
-    "@tinyland-inc/tinyland-calendar": "workspace:*"
+    "@tummycrypt/tinyland-calendar": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

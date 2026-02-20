@@ -5,7 +5,7 @@
  * calendar-query REPORT, and sync-collection REPORT support.
  */
 
-import type { CalendarEvent, CalDAVSyncResult, Change, EventFilters } from '@tinyland-inc/tinyland-calendar';
+import type { CalendarEvent, CalDAVSyncResult, Change, EventFilters } from '@tummycrypt/tinyland-calendar';
 import { getConfig } from './config.js';
 import { CalDAVConflictError } from './errors.js';
 import { generateICalData, parseICalData, formatDateTime } from './ical-utils.js';
