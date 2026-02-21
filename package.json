@@ -34,7 +34,8 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "dependencies": {
     "fast-xml-parser": "^4.0.0",
