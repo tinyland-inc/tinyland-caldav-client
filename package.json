@@ -1,6 +1,6 @@
 {
   "name": "@tummycrypt/tinyland-caldav-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CalDAV client for Xandikos calendar server with sync-token support",
   "type": "module",
   "main": "./dist/index.js",
