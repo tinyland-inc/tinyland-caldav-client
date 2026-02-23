@@ -1,18 +1,18 @@
-/**
- * Comprehensive tests for @tummycrypt/tinyland-caldav-client
- *
- * Tests all exported functionality:
- * - Config DI
- * - CalDAVConflictError
- * - iCal generation and parsing
- * - Date formatting/parsing
- * - CRUD operations (createEvent, updateEvent, deleteEvent, getEvent)
- * - listEvents (PROPFIND)
- * - queryEvents (REPORT)
- * - Sync operations (getSyncToken, syncCollection)
- * - XML parsing helpers
- * - Singletons
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import {
@@ -36,9 +36,9 @@ import {
   parseSyncCollectionResponse,
 } from '../src/index.js';
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
+
+
+
 
 function mockFetch(
   overrides: Partial<{
@@ -172,9 +172,9 @@ const SYNC_TOKEN_RESPONSE = `<?xml version="1.0" encoding="utf-8"?>
   </D:response>
 </D:multistatus>`;
 
-// ===========================================================================
-// 1. Config DI
-// ===========================================================================
+
+
+
 
 describe('Config DI', () => {
   beforeEach(() => resetConfig());
@@ -259,9 +259,9 @@ describe('Config DI', () => {
   });
 });
 
-// ===========================================================================
-// 2. CalDAVConflictError
-// ===========================================================================
+
+
+
 
 describe('CalDAVConflictError', () => {
   it('should set message', () => {
@@ -296,9 +296,9 @@ describe('CalDAVConflictError', () => {
   });
 });
 
-// ===========================================================================
-// 3. iCal generation
-// ===========================================================================
+
+
+
 
 describe('iCal generation (generateICalData)', () => {
   it('should generate valid VCALENDAR wrapper', () => {
@@ -407,7 +407,7 @@ describe('iCal generation (generateICalData)', () => {
   it('should join lines with CRLF', () => {
     const data = generateICalData({ uid: 'test' });
     expect(data).toContain('\r\n');
-    expect(data).not.toMatch(/(?<!\r)\n/); // No bare LF
+    expect(data).not.toMatch(/(?<!\r)\n/); 
   });
 
   it('should escape special characters in SUMMARY', () => {
@@ -416,9 +416,9 @@ describe('iCal generation (generateICalData)', () => {
   });
 });
 
-// ===========================================================================
-// 4. iCal parsing
-// ===========================================================================
+
+
+
 
 describe('iCal parsing (parseICalData)', () => {
   it('should parse UID', () => {
@@ -535,9 +535,9 @@ describe('iCal parsing (parseICalData)', () => {
   });
 });
 
-// ===========================================================================
-// 5. Date formatting
-// ===========================================================================
+
+
+
 
 describe('Date formatting (formatDateTime)', () => {
   it('should format Date to iCal format', () => {
@@ -590,9 +590,9 @@ describe('Date parsing (parseDateTime)', () => {
   });
 });
 
-// ===========================================================================
-// 6. escapeText / unescapeText
-// ===========================================================================
+
+
+
 
 describe('escapeText', () => {
   it('should escape backslashes', () => {
@@ -647,9 +647,9 @@ describe('unescapeText', () => {
   });
 });
 
-// ===========================================================================
-// 7. CRUD operations
-// ===========================================================================
+
+
+
 
 describe('CalendarClient CRUD', () => {
   let client: CalendarClient;
@@ -667,7 +667,7 @@ describe('CalendarClient CRUD', () => {
     vi.unstubAllGlobals();
   });
 
-  // createEvent
+  
   describe('createEvent', () => {
     it('should PUT to correct URL with given uid', async () => {
       const uid = await client.createEvent({ uid: 'ev-1', title: 'Test' });
@@ -713,7 +713,7 @@ describe('CalendarClient CRUD', () => {
     });
   });
 
-  // createEventWithETag
+  
   describe('createEventWithETag', () => {
     it('should return uid and etag', async () => {
       vi.stubGlobal(
@@ -736,7 +736,7 @@ describe('CalendarClient CRUD', () => {
     });
   });
 
-  // updateEvent
+  
   describe('updateEvent', () => {
     it('should PUT to correct URL', async () => {
       await client.updateEvent('uid-1', { title: 'Updated' });
@@ -791,7 +791,7 @@ describe('CalendarClient CRUD', () => {
     });
   });
 
-  // deleteEvent
+  
   describe('deleteEvent', () => {
     it('should DELETE correct URL', async () => {
       await client.deleteEvent('uid-1');
@@ -812,7 +812,7 @@ describe('CalendarClient CRUD', () => {
     });
   });
 
-  // getEvent
+  
   describe('getEvent', () => {
     it('should GET correct URL', async () => {
       const getMock = mockFetch({ text: SAMPLE_ICAL, headers: { ETag: '"e1"' } });
@@ -856,9 +856,9 @@ describe('CalendarClient CRUD', () => {
   });
 });
 
-// ===========================================================================
-// 8. listEvents
-// ===========================================================================
+
+
+
 
 describe('CalendarClient listEvents', () => {
   let client: CalendarClient;
@@ -934,7 +934,7 @@ describe('CalendarClient listEvents', () => {
   it('should use configurable timeout', async () => {
     configure({ listTimeout: 100 });
     const newClient = new CalendarClient();
-    // The timeout is set inside the method; we verify it does not throw for a fast response
+    
     vi.stubGlobal('fetch', mockFetch({ text: '<D:multistatus xmlns:D="DAV:"></D:multistatus>' }));
     const events = await newClient.listEvents();
     expect(events).toEqual([]);
@@ -954,9 +954,9 @@ describe('CalendarClient listEvents', () => {
   });
 });
 
-// ===========================================================================
-// 9. queryEvents
-// ===========================================================================
+
+
+
 
 describe('CalendarClient queryEvents', () => {
   let client: CalendarClient;
@@ -1010,7 +1010,7 @@ describe('CalendarClient queryEvents', () => {
     ]);
     vi.stubGlobal('fetch', fn);
     const events = await client.queryEvents();
-    // Second call should be PROPFIND (listEvents fallback)
+    
     expect(fn.mock.calls[1][1].method).toBe('PROPFIND');
     expect(events).toEqual([]);
   });
@@ -1051,7 +1051,7 @@ describe('CalendarClient queryEvents', () => {
     const body = fn.mock.calls[0][1].body;
     expect(body).toContain('time-range');
     expect(body).toContain('20250601T');
-    expect(body).toContain('20991231T'); // default end
+    expect(body).toContain('20991231T'); 
   });
 
   it('should use configurable timeout', async () => {
@@ -1063,9 +1063,9 @@ describe('CalendarClient queryEvents', () => {
   });
 });
 
-// ===========================================================================
-// 10. Sync operations
-// ===========================================================================
+
+
+
 
 describe('CalendarClient getSyncToken', () => {
   let client: CalendarClient;
@@ -1163,7 +1163,7 @@ describe('CalendarClient syncCollection', () => {
     const result = await client.syncCollection('token-1');
     const added = result.changes!.find((c) => c.href.includes('added'));
     expect(added).toBeDefined();
-    expect(added!.status).toBe('modified'); // 200 status = modified (default)
+    expect(added!.status).toBe('modified'); 
     expect(added!.etag).toBe('"new-etag"');
   });
 
@@ -1250,9 +1250,9 @@ describe('CalendarClient syncCollection', () => {
   });
 });
 
-// ===========================================================================
-// 11. XML parsing helpers
-// ===========================================================================
+
+
+
 
 describe('XML parsing utilities', () => {
   describe('extractHrefsFromPropfind', () => {
@@ -1403,9 +1403,9 @@ describe('XML parsing utilities', () => {
   });
 });
 
-// ===========================================================================
-// 12. Singletons and getETag
-// ===========================================================================
+
+
+
 
 describe('Singletons', () => {
   it('should export calendarClient as CalendarClient instance', () => {
@@ -1460,9 +1460,9 @@ describe('CalendarClient getETag', () => {
   });
 });
 
-// ===========================================================================
-// 13. Constructor DI integration
-// ===========================================================================
+
+
+
 
 describe('CalendarClient constructor integration', () => {
   afterEach(() => {
@@ -1476,7 +1476,7 @@ describe('CalendarClient constructor integration', () => {
     const fn = mockFetch({ headers: { ETag: '"e"' } });
     vi.stubGlobal('fetch', fn);
     client.getETag('uid');
-    // Default is http://xandikos:8000
+    
     expect(fn.mock.calls[0][0]).toContain('http://xandikos:8000');
   });
 
