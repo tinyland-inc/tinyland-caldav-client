@@ -1,14 +1,14 @@
-/**
- * iCalendar Utilities
- *
- * Generation, parsing, escaping, and date formatting for iCalendar (RFC 5545) data.
- */
+
+
+
+
+
 
 import type { CalendarEvent } from '@tummycrypt/tinyland-calendar';
 
-/**
- * Escape text for iCalendar format (RFC 5545 Section 3.3.11)
- */
+
+
+
 export function escapeText(text: string | unknown): string {
   const str = String(text || '');
   return str
@@ -18,9 +18,9 @@ export function escapeText(text: string | unknown): string {
     .replace(/\n/g, '\\n');
 }
 
-/**
- * Unescape text from iCalendar format
- */
+
+
+
 export function unescapeText(text: string): string {
   return text
     .replace(/\\n/g, '\n')
@@ -29,26 +29,26 @@ export function unescapeText(text: string): string {
     .replace(/\\\\/g, '\\');
 }
 
-/**
- * Format a Date to iCalendar DATE-TIME format (YYYYMMDDTHHMMSSZ)
- */
+
+
+
 export function formatDateTime(date: Date): string {
   return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 }
 
-/**
- * Parse iCalendar date string to ISO 8601
- *
- * Supports:
- * - DATE format: YYYYMMDD -> YYYY-MM-DD
- * - DATE-TIME format: YYYYMMDDTHHMMSSZ -> YYYY-MM-DDTHH:MM:SSZ
- */
+
+
+
+
+
+
+
 export function parseDateTime(value: string): string {
   if (value.length === 8) {
-    // DATE format: YYYYMMDD
+    
     return `${value.substring(0, 4)}-${value.substring(4, 6)}-${value.substring(6, 8)}`;
   } else {
-    // DATE-TIME format: YYYYMMDDTHHMMSSZ
+    
     const year = value.substring(0, 4);
     const month = value.substring(4, 6);
     const day = value.substring(6, 8);
@@ -59,9 +59,9 @@ export function parseDateTime(value: string): string {
   }
 }
 
-/**
- * Generate iCalendar (VCALENDAR/VEVENT) data from an event object
- */
+
+
+
 export function generateICalData(event: Partial<CalendarEvent>): string {
   const lines = [
     'BEGIN:VCALENDAR',
@@ -114,9 +114,9 @@ export function generateICalData(event: Partial<CalendarEvent>): string {
   return lines.join('\r\n');
 }
 
-/**
- * Parse iCalendar data to a CalendarEvent object
- */
+
+
+
 export function parseICalData(icalData: string): CalendarEvent {
   const lines = icalData.split(/\r?\n/);
   const event: Partial<CalendarEvent> = {};

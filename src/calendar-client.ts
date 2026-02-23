@@ -1,9 +1,9 @@
-/**
- * CalendarClient
- *
- * CalDAV client for Xandikos calendar server with full CRUD,
- * calendar-query REPORT, and sync-collection REPORT support.
- */
+
+
+
+
+
+
 
 import type { CalendarEvent, CalDAVSyncResult, Change, EventFilters } from '@tummycrypt/tinyland-calendar';
 import { getConfig } from './config.js';
@@ -17,10 +17,10 @@ import {
   parseSyncCollectionResponse,
 } from './xml-utils.js';
 
-/**
- * Internal sync result type matching CalDAVSyncResult from tinyland-calendar.
- * Re-exported for use by xml-utils.
- */
+
+
+
+
 export interface CalDAVSyncResultInternal {
   success: boolean;
   etag?: string;
@@ -52,14 +52,14 @@ export class CalendarClient {
     this.syncTimeout = config.syncTimeout ?? DEFAULT_SYNC_TIMEOUT;
   }
 
-  // ==========================================================================
-  // CRUD Operations
-  // ==========================================================================
+  
+  
+  
 
-  /**
-   * Create a new calendar event.
-   * @returns The event UID
-   */
+  
+
+
+
   async createEvent(event: Partial<CalendarEvent>): Promise<string> {
     const uid =
       event.uid || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@stonewallunderground.com`;
@@ -85,9 +85,9 @@ export class CalendarClient {
     return uid;
   }
 
-  /**
-   * Create event and return full result with ETag.
-   */
+  
+
+
   async createEventWithETag(
     event: Partial<CalendarEvent>
   ): Promise<{ uid: string; etag?: string }> {
@@ -116,14 +116,14 @@ export class CalendarClient {
     return { uid, etag };
   }
 
-  /**
-   * Update an existing calendar event with ETag conflict detection.
-   *
-   * If event.caldavEtag is provided, uses If-Match header for optimistic locking.
-   * Throws CalDAVConflictError on 412 Precondition Failed (ETag mismatch).
-   *
-   * @returns The new ETag, or undefined
-   */
+  
+
+
+
+
+
+
+
   async updateEvent(uid: string, event: Partial<CalendarEvent>): Promise<string | undefined> {
     const icalData = generateICalData({ ...event, uid });
 
@@ -157,9 +157,9 @@ export class CalendarClient {
     return response.headers.get('ETag') || undefined;
   }
 
-  /**
-   * Delete a calendar event. Does not throw on 404.
-   */
+  
+
+
   async deleteEvent(uid: string): Promise<void> {
     const response = await fetch(`${this.baseUrl}${this.calendarPath}${uid}.ics`, {
       method: 'DELETE',
@@ -170,10 +170,10 @@ export class CalendarClient {
     }
   }
 
-  /**
-   * Get a calendar event with ETag for conflict detection.
-   * Returns null if not found (404).
-   */
+  
+
+
+
   async getEvent(uid: string): Promise<CalendarEvent | null> {
     const response = await fetch(`${this.baseUrl}${this.calendarPath}${uid}.ics`);
 
@@ -198,13 +198,13 @@ export class CalendarClient {
     return event;
   }
 
-  // ==========================================================================
-  // List / Query
-  // ==========================================================================
+  
+  
+  
 
-  /**
-   * List all calendar events via PROPFIND.
-   */
+  
+
+
   async listEvents(): Promise<CalendarEvent[]> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.listTimeout);
@@ -247,7 +247,7 @@ export class CalendarClient {
               events.push(event);
             }
           } catch (_error) {
-            // Skip events that fail to fetch
+            
           }
         }
       }
@@ -262,10 +262,10 @@ export class CalendarClient {
     }
   }
 
-  /**
-   * Query events with optional date range filter using CalDAV REPORT.
-   * Falls back to listEvents() if REPORT not supported (501).
-   */
+  
+
+
+
   async queryEvents(filters?: EventFilters): Promise<CalendarEvent[]> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.queryTimeout);
@@ -303,13 +303,13 @@ export class CalendarClient {
     }
   }
 
-  // ==========================================================================
-  // Sync (RFC 6578)
-  // ==========================================================================
+  
+  
+  
 
-  /**
-   * Get current sync token for the calendar collection.
-   */
+  
+
+
   async getSyncToken(): Promise<string | null> {
     const response = await fetch(`${this.baseUrl}${this.calendarPath}`, {
       method: 'PROPFIND',
@@ -361,16 +361,16 @@ export class CalendarClient {
         }
       }
     } catch (_error) {
-      // XML parsing failed
+      
     }
 
     return null;
   }
 
-  /**
-   * Sync collection using sync-token for incremental updates.
-   * Returns changed events since the provided sync token.
-   */
+  
+
+
+
   async syncCollection(syncToken?: string): Promise<CalDAVSyncResult> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.syncTimeout);
@@ -425,13 +425,13 @@ export class CalendarClient {
     }
   }
 
-  // ==========================================================================
-  // ETag
-  // ==========================================================================
+  
+  
+  
 
-  /**
-   * Get ETag for a specific event without fetching full content.
-   */
+  
+
+
   async getETag(uid: string): Promise<string | null> {
     const response = await fetch(`${this.baseUrl}${this.calendarPath}${uid}.ics`, {
       method: 'HEAD',
@@ -445,6 +445,6 @@ export class CalendarClient {
   }
 }
 
-// Singleton instances
+
 export const calendarClient = new CalendarClient();
 export const xandikosClient = calendarClient;

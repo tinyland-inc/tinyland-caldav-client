@@ -1,18 +1,18 @@
-/**
- * XML Utilities
- *
- * Parsing helpers for CalDAV/WebDAV XML responses:
- * - PROPFIND multistatus
- * - Calendar-query REPORT
- * - Sync-collection REPORT
- */
+
+
+
+
+
+
+
+
 
 import { XMLParser } from 'fast-xml-parser';
 import type { CalendarEvent, Change } from '@tummycrypt/tinyland-calendar';
 import type { CalDAVSyncResultInternal } from './calendar-client.js';
 import { parseICalData } from './ical-utils.js';
 
-// XML parser configured for WebDAV/CalDAV responses
+
 const xmlParser = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
@@ -22,9 +22,9 @@ const xmlParser = new XMLParser({
   },
 });
 
-/**
- * Extract .ics hrefs from a PROPFIND multistatus response
- */
+
+
+
 export function extractHrefsFromPropfind(xmlText: string): string[] {
   try {
     const parsed = xmlParser.parse(xmlText);
@@ -47,16 +47,16 @@ export function extractHrefsFromPropfind(xmlText: string): string[] {
 
     return hrefs;
   } catch (error) {
-    // Fallback to regex if XML parsing fails
+    
     const hrefMatches = xmlText.match(/<(?:D:)?href>([^<]+\.ics)<\/(?:D:)?href>/g);
     if (!hrefMatches) return [];
     return hrefMatches.map((match) => match.replace(/<\/?(?:D:)?href>/g, ''));
   }
 }
 
-/**
- * Parse a calendar-query REPORT response containing embedded calendar-data
- */
+
+
+
 export function parseCalendarQueryResponse(
   xmlText: string,
   baseUrl: string
@@ -115,9 +115,9 @@ export function parseCalendarQueryResponse(
   }
 }
 
-/**
- * Build calendar-query REPORT XML body
- */
+
+
+
 export function buildCalendarQueryXml(
   filters: { from?: string; to?: string } | undefined,
   formatDateTime: (date: Date) => string
@@ -151,9 +151,9 @@ export function buildCalendarQueryXml(
       </C:calendar-query>`;
 }
 
-/**
- * Build sync-collection REPORT XML body
- */
+
+
+
 export function buildSyncCollectionXml(syncToken?: string): string {
   const tokenElement = syncToken
     ? `<D:sync-token>${syncToken}</D:sync-token>`
@@ -169,9 +169,9 @@ export function buildSyncCollectionXml(syncToken?: string): string {
       </D:sync-collection>`;
 }
 
-/**
- * Parse sync-collection REPORT response
- */
+
+
+
 export function parseSyncCollectionResponse(xmlText: string): CalDAVSyncResultInternal {
   try {
     const parsed = xmlParser.parse(xmlText);
