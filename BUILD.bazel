@@ -3,7 +3,6 @@ BUILD.bazel for @tummycrypt/tinyland-caldav-client.
 
 Dual-mode build: works with both pnpm (standalone) and Bazel (CI/production).
   Standalone: cd packages/tinyland-caldav-client && pnpm build
-  Monorepo:   bazel build //packages/tinyland-caldav-client/...
 """
 
 load("@aspect_rules_js//npm:defs.bzl", "npm_package")
@@ -35,7 +34,6 @@ ts_project(
         ":node_modules",
         ":node_modules/fast-xml-parser",
         ":node_modules/@types/node",
-        "//packages/tinyland-calendar:tinyland_calendar",
     ],
     visibility = ["//visibility:public"],
 )
