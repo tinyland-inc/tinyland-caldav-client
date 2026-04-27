@@ -1,6 +1,6 @@
 {
   "name": "@tummycrypt/tinyland-caldav-client",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "CalDAV client for Xandikos calendar server with sync-token support",
   "type": "module",
   "main": "./dist/index.js",
@@ -20,33 +20,39 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run build",
-    "test": "vitest",
+    "prepublishOnly": "pnpm build && pnpm check:package",
+    "test": "vitest run",
     "test:coverage": "vitest --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:package": "publint"
   },
   "author": "Tinyland.dev",
   "license": "Zlib AND LicenseRef-Tinyland-Proprietary",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tinyland-inc/tinyland.dev",
-    "directory": "packages/tinyland-caldav-client"
+    "url": "git+https://github.com/tinyland-inc/tinyland-caldav-client.git"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "dependencies": {
     "fast-xml-parser": "^5.0.0",
-    "@tummycrypt/tinyland-calendar": "workspace:*"
+    "@tummycrypt/tinyland-calendar": "^0.2.2"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0",
-    "vitest": "^4.0.0"
+    "vitest": "^4.0.0",
+    "publint": "^0.3.18",
+    "@tummycrypt/tinyland-calendar": "^0.2.2"
   },
   "engines": {
     "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "homepage": "https://github.com/tinyland-inc/tinyland-caldav-client",
+  "bugs": {
+    "url": "https://github.com/tinyland-inc/tinyland-caldav-client/issues"
   }
 }
