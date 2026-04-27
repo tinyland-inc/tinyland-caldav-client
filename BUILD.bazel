@@ -45,7 +45,7 @@ npm_package(
         ":tinyland_caldav_client",
     ],
     package = "@tummycrypt/tinyland-caldav-client",
-    version = "0.2.2",
+    version = "0.2.3",
     visibility = ["//visibility:public"],
 )
 
